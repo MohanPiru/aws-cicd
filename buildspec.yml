@@ -2,29 +2,28 @@ version: 0.2
 
 env:
   parameter-store:
-    DOCKER_REGISTRY_USERNAME: /myapp/docker-credentials/username
-    DOCKER_REGISTRY_PASSWORD: /myapp/docker-credentials/password
-    DOCKER_REGISTRY_URL: /myapp/docker-registry/url
+    DOCKER_REGISTRY_USERNAME: /flaskapp/docker-credentials/username
+    DOCKER_REGISTRY_PASSWORD: /flaskapp/docker-credentials/password
+    DOCKER_REGISTRY_URL: /flaskapp/docker-registry/url
 phases:
-  install:
-    runtime-versions:
-      python: 3.11
+  # install:
+  #   runtime-versions:
+  #     python: 3.11
   pre_build:
     commands:
-      - echo "Installing dependencies..."
-      - pip install -r day-13/simple-python-app/requirements.txt
+      - echo "running pre_build commands if any"
+      # - pip install -r requirements.txt
+      
   build:
     commands:
-      - echo "Running tests..."
-      - cd day-13/simple-python-app/
-      - echo "Building Docker image..."
+      - echo "Building the image..."
+      - docker build -t "$DOCKER_REGISTRY_USERNAME/simple-flask-app:$(date +"%M-%d-%m-%Y")" .
       - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
-      - docker build -t "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/simple-python-flask-app:latest" .
-      - docker push "$DOCKER_REGISTRY_URL/$DOCKER_REGISTRY_USERNAME/simple-python-flask-app:latest"
+      - docker push "$DOCKER_REGISTRY_USERNAME/simple-flask-app:$(date +"%M-%d-%m-%Y")"
   post_build:
     commands:
       - echo "Build completed successfully!"
 artifacts:
   files:
     - '**/*'
-  base-directory: ../simple-python-app
+  base-directory: .
