@@ -17,9 +17,9 @@ phases:
   build:
     commands:
       - echo "Building the image..."
-      - docker build -t "$DOCKER_REGISTRY_USERNAME/simple-flask-app:$(date +"%M-%d-%m-%Y")" .
+      - docker build -t "$DOCKER_REGISTRY_USERNAME/simple-flask-app:latest" .
       - echo "$DOCKER_REGISTRY_PASSWORD" | docker login -u "$DOCKER_REGISTRY_USERNAME" --password-stdin "$DOCKER_REGISTRY_URL"
-      - docker push "$DOCKER_REGISTRY_USERNAME/simple-flask-app:$(date +"%M-%d-%m-%Y")"
+      - docker push "$DOCKER_REGISTRY_USERNAME/simple-flask-app:latest"
   post_build:
     commands:
       - echo "Build completed successfully!"
