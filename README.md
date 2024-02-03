@@ -1,5 +1,7 @@
 # aws-cicd
 This is a repo of ci/cd implementation in AWS. I am using here a simple python flask webapp to deploy it to ec2 using aws CodePipeline.
+<img width="903" alt="aws-cicd" src="https://github.com/MohanPiru/aws-cicd/assets/140044323/0ccd9ec2-be47-4cf2-9000-c13289082650">
+
 
 **Steps:**
 * **configure aws CodeCommit** 
@@ -7,6 +9,7 @@ This is a repo of ci/cd implementation in AWS. I am using here a simple python f
   setup Https connection with a aws codeCommit repo with any code editor(like vscode)and push all the files (my git repo files)
 
 * **Configure SSM**
+  
     create 3 secure string **/flaskapp/docker-credentials/username** , **/flaskapp/docker-credentials/password** , **/flaskapp/docker-registry/url** in parameter store [value will the the actual value of like username and password]
      
  * **configure aws CodeBuild**   
